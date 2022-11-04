@@ -4,6 +4,7 @@ Deploy webapps to https://pabalca.com
 
 | Webapp    | Url                           | Github                                      |
 |-----------|-------------------------------|---------------------------------------------|
+| Dashboard | https://pabalca.com           | https://github.com/pabalca/dashboard        |
 | Artwork   | https://art.pabalca.com       | https://github.com/pabalca/artwork          |
 | Chat      | https://chat.pabalca.com      | https://github.com/pabalca/chat             |
 | Passwords | https://password.pabalca.com  | https://github.com/pabalca/password_manager |
@@ -20,4 +21,9 @@ dependencies:
       script_name: chat
       script_dns: chat.pabalca.com
       script_url: git@github.com:pabalca/chat.git
+```
+
+## Run it
+```
+ansible-playbook -i inventory/ site.yml -t webapps -kK
 ```
