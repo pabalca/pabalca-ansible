@@ -1,0 +1,6 @@
+---
+script_name: ruler
+script_dns: ruler.pabalca.com
+script_path: /opt/apps/{{ script_name }}
+script_url: git@github.com:pabalca/ruler.git
+use_database: True

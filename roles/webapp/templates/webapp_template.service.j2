@@ -1,0 +1,16 @@
+[Unit]
+Description=Webapp {{ script_name }}
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=3
+WorkingDirectory={{ script_path }}
+
+ExecStart={{ script_path }}/venv/bin/gunicorn --bind unix:/tmp/{{ script_name }}.sock {{ script_name }}:app
+User=pabs
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,9 @@
+---
+
+dependencies:
+  - role: webapp
+    vars:
+      script_name: chat
+      script_dns: chat.pabalca.com
+      script_url: git@github.com:pabalca/chat.git
+

@@ -1,0 +1,10 @@
+---
+
+dependencies:
+  - role: webapp
+    vars:
+      script_name: artwork
+      script_dns: art.pabalca.com
+      script_url: git@github.com:pabalca/artwork.git
+      use_database: False
+

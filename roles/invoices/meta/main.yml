@@ -1,0 +1,9 @@
+---
+
+dependencies:
+  - role: webapp
+    vars:
+      script_name: invoices
+      script_dns: invoice.pabalca.com
+      script_url: git@github.com:pabalca/invoices.git
+

@@ -1,0 +1,46 @@
+---
+
+- name: ruler
+  hosts: ocean
+  become: false
+  gather_facts: no
+  roles:
+    - role: ruler
+  tags:
+    - ruler
+
+- name: passwords webapp
+  hosts: ocean
+  become: false
+  gather_facts: no
+  roles:
+    - role: passwords
+  tags:
+    - passwords
+
+- name: artwork webapp
+  hosts: ocean
+  become: false
+  gather_facts: no
+  roles:
+    - role: artwork
+  tags:
+    - artwork
+
+- name: chat webapp
+  hosts: ocean
+  become: false
+  gather_facts: no
+  roles:
+    - role: chat
+  tags:
+    - chat
+
+- name: invoices webapp
+  hosts: ocean
+  become: false
+  gather_facts: no
+  roles:
+    - role: invoices
+  tags:
+    - invoices

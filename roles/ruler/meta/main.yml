@@ -1,0 +1,9 @@
+---
+
+dependencies:
+  - role: webapp
+    vars:
+      script_name: ruler
+      script_dns: ruler.pabalca.com
+      script_url: git@github.com:pabalca/ruler.git
+

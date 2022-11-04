@@ -1,0 +1,108 @@
+---
+- name: create directory
+  file:
+    path: "{{ script_path }}"
+    state: directory
+
+- name: clone repository
+  git:
+    repo: "{{ script_url }}"
+    dest: "{{ script_path }}"
+    clone: yes
+    update: yes
+
+- name: install command into virtualenv
+  pip:
+    requirements: "{{ script_path }}/requirements.txt"
+    # name: command
+    virtualenv: "{{ script_path }}/venv"
+    virtualenv_python: python3
+
+- name: Check if database exists
+  stat:
+    path: "{{ script_path }}/data.db"
+  register: database
+
+- name: Initialise database
+  shell:
+    "{{ script_path }}/venv/bin/flask --app {{ script_name }} initdb"
+  args:
+    chdir: "{{ script_path }}"
+  when: not database.stat.exists and use_database == True
+
+- name: generate systemd unit
+  become: true
+  template:
+    src: webapp_template.service.j2
+    dest: /etc/systemd/system/webapp_{{ script_name }}.service
+    # owner: root
+    # group: root
+    # mode: 0755  
+  register: units_in_disk
+
+
+- name: install dependencies
+  apt:
+    name: nginx
+    state: latest
+  with_items:
+    - nginx
+    - python3-certbox-nginx
+
+- name: Check if certificates already exist
+  become: true
+  stat:
+    path: "/etc/letsencrypt/live/{{ script_dns }}"
+  register: certificate
+ 
+
+- name: Retrieve certificate
+  become: true
+  shell: "certbot certonly --nginx -d {{ script_dns }} -d www.{{ script_dns }}"
+  when: not certificate.stat.exists
+
+
+- name: configure webapp in nginx
+  become: true
+  template:
+    src: nginx_template.j2
+    dest: /etc/nginx/sites-enabled/{{ script_name }}
+    # owner: root
+    # group: root
+    # mode: 0755  
+  register: nginx_configuration
+
+- name: reload nginx
+  become: true
+  service:
+    name: nginx
+    state: restarted
+    enabled: yes
+  when: nginx_configuration.changed
+
+- name: restart if unit changed
+  become: true
+  service:
+    name: webapp_{{ script_name }}
+    state: restarted
+    daemon_reload: yes
+    enabled: yes
+  when: units_in_disk.changed
+
+- name: stop old services
+  become: true
+  service:
+    name: webapp_{{ delete_script_name }}
+    state: stopped
+    enabled: no
+  # loop: "{{ delete_script_name | default([]) }}"
+  when: delete_script_name | default('') | length > 0
+
+
+- name: delete old services
+  become: true
+  file:
+    path: /etc/systemd/system/webapp_{{ script_name }}.service
+    state: absent
+  when: delete_script_name | default('') | length > 0
+  

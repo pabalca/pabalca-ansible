@@ -1,0 +1,9 @@
+---
+
+dependencies:
+  - role: webapp
+    vars:
+      script_name: password_manager
+      script_dns: password.pabalca.com
+      script_url: git@github.com:pabalca/password_manager.git
+
