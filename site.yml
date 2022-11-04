@@ -1,5 +1,18 @@
 ---
 
+- name: webapps
+  hosts: ocean
+  become: false
+  gather_facts: no
+  roles:
+    - ruler
+    - passwords
+    - artwork
+    - chat
+    - invoices
+  tags:
+    - webapps
+
 - name: ruler
   hosts: ocean
   become: false
