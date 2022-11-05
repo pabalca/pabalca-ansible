@@ -57,3 +57,12 @@
     - role: invoices
   tags:
     - invoices
+
+- name: secrets webapp
+  hosts: ocean
+  become: false
+  gather_facts: no
+  roles:
+    - role: secrets
+  tags:
+    - secrets
