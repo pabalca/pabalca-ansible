@@ -1,0 +1,9 @@
+---
+
+dependencies:
+  - role: webapp
+    vars:
+      script_name: game
+      script_dns: game.pabalca.com
+      script_url: git@github.com:pabalca/game.git
+
