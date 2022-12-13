@@ -1,0 +1,9 @@
+---
+
+dependencies:
+  - role: webapp
+    vars:
+      script_name: twitter_spaces_tracker
+      script_dns: tst.pabalca.com
+      script_url: git@github.com:pabalca/twitter_spaces_tracker.git
+

@@ -75,3 +75,12 @@
     - role: game
   tags:
     - game
+
+- name: twitter spaces tracker webapp
+  hosts: ocean
+  become: false
+  gather_facts: no
+  roles:
+    - role: tst
+  tags:
+    - tst
